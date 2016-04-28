@@ -1,0 +1,45 @@
+[ "$DEBUG" ] && set -x
+
+set -eo pipefail -o errtrace
+
+[ -n "$CIRCLECI_USER" ] || export CIRCLECI_USER=ubuntu
+export CIRCLECI_HOME=/home/${CIRCLECI_USER}
+export CIRCLECI_PKG_DIR=/opt/circleci
+
+sub_help(){
+    echo "Kim Usage: $SCRIPT_NAME <subcommand> [options]"
+    echo ""
+    echo "Subcommands:"
+    echo "    install: install things"
+    echo "    switch:  switch things"
+    echo ""
+    echo "For help with each subcommand run:"
+    echo "$SCRIPT_NAME <subcommand> -h|--help"
+    echo ""
+}
+
+sub_install(){
+    install_$@
+}
+
+sub_switch(){
+    switch_$@
+}
+
+main() {
+    subcommand=$1
+    case $subcommand in
+	"" | "-h" | "--help")
+            sub_help
+            ;;
+	*)
+            shift
+            sub_${subcommand} $@
+            if [ $? = 127 ]; then
+		echo "Error: '$subcommand' is not a known subcommand." >&2
+		echo "Run '$SCRIPT_NAME --help' for a list of known subcommands." >&2
+		exit 1
+            fi
+            ;;
+    esac
+}

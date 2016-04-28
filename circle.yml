@@ -1,0 +1,25 @@
+machine:
+  environment:
+    PATH: /opt/circleci/bin:$PATH
+
+  pre:
+    - sudo curl -L -o /usr/bin/docker 'https://s3.amazonaws.com/circle-downloads/docker-1.9.1-circleci'
+    - sudo service docker start
+
+dependencies:
+  override:
+    - ./build.sh
+
+test:
+  override:
+
+    - docker build -t test-trusty .
+
+    - docker run test-trusty bats /home/ubuntu/tests/chrome.bats
+
+deployment:
+  release:
+    branch: master
+    commands:
+      - 'aws s3 cp dist/circle-env-precise s3://circle-downloads/ --acl public-read'
+      - 'aws s3 cp dist/circle-env-trusty s3://circle-downloads/ --acl public-read'
