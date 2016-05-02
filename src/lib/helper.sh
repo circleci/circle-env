@@ -30,3 +30,15 @@ function install_deb_force() {
     local pkg=$1
     sudo dpkg -i $pkg || sudo apt-get -y -f install
 }
+
+function install_remote_deb() {
+    local pkg=$1
+    local base_url="https://s3-external-1.amazonaws.com/circle-downloads"
+    local remote_deb="$base_url/$pkg"
+
+    pushd /tmp
+    wget $remote_deb
+    install_deb_force $pkg
+    rm $pkg
+    popd
+}
