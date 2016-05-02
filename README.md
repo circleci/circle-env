@@ -6,6 +6,9 @@
 
 `circle-env` is a collection of bash scripts that abstracts the way packages/tools to be installed on CircleCI container. It provides a simple interface: `circle-env install` and it will take care of trivial things such as OS version, where to get the package from, etc.
 
+## Project Status
+This project is still under heavy development. Please let us know when you find bugs or something not working for you!
+
 ## Install
 
 Add the following lines to your circle.yml
@@ -47,7 +50,12 @@ The actual scripts must be stored under `src/scripts/<distro>`. Currently there 
 
 When you run `./build.sh` it will compile all scripts under `src/scripts/<distro>` into big `circle-env-precise` and `circle-env-trusty` scripts.
 
+### Hosting Files
+
+When you want to upload files for your scripts, CircleCI AWS S3 bucket is the best place for the performance. Please let us know and we will upload files for you.
+
 ### Test (manually)
+
 Because the scripts are meant to be run on CircleCI build images, they may be broken when you run on your local Linux box.
 
 
@@ -72,6 +80,7 @@ You can modify the scripts locally and the scripts in the container will be upda
 the procedures only work for Trusty since CircleCI doesn't have a Precise Docker image to test. If you want to test Precise, the best way is [ssh](https://circleci.com/docs/ssh-build/) into a CircleCI container.
 
 ### Test (automatically)
+
 Please write tests when you add new scripts. There are [bats](https://github.com/sstephenson/bats) tests under `tests/` directory.
 
 To run the tests
