@@ -4,10 +4,11 @@
 
 ## What is this?
 
-`circle-env` is a collection of bash scripts that abstracts the way packages/tools to be installed on CircleCI container. It provides a simple interface: `circle-env install` and it will take care of trivial things such as OS version, where to get the package from, etc.
+`circle-env` is a collection of bash scripts that abstracts the way custom software to be installed on CircleCI container. It provides a simple interface: `circle-env install` and it will take care of trivial things such as OS version, where to get the package from, etc.
 
 ## Project Status
-This project is still under heavy development. Please let us know when you find bugs or something not working for you!
+
+This project is still under heavy development and not officially supported by CircleCI. Please create a Github issue if you find bugs.
 
 ## Install
 
@@ -52,7 +53,7 @@ When you run `./build.sh` it will compile all scripts under `src/scripts/<distro
 
 ### Hosting Files
 
-When you want to upload files for your scripts, CircleCI AWS S3 bucket is the best place for the performance. Please let us know and we will upload files for you.
+CircleCI AWS S3 bucket is the best place to host files that need to be downloaded in your scripts. Please create a Github issue if you have files to upload.
 
 ### Test (manually)
 
